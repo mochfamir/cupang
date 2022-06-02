@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import type { AppProps } from "next/app";
-
 import { getAuth } from "@libs/firebase";
 
 import { Col, Layout, Menu, Row } from "antd";
@@ -15,12 +13,10 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-import "../styles/globals.css";
-import "antd/dist/antd.css";
+import MeetingV2 from "pages/meeting-v2";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export const ContainerMeeting = () => {
   const router = useRouter();
-  const [isLoginPage, setIsLoginPage] = useState(false);
   const [collapsed, setCollapsed] = useState();
 
   function onCollapse(value: any) {
@@ -33,36 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     router.push("/login");
   }
 
-  useEffect(() => {
-    setIsLoginPage(router.pathname.includes("login"));
-
-    // router.events.on("routeChangeError", () => {
-    //   console.log("error");
-    // });
-
-    // router.events.on("beforeHistoryChange", () => console.log("before"));
-    // router.events.on("hashChangeComplete", () =>
-    //   console.log("change complete")
-    // );
-    // router.events.on("hashChangeStart", () => {
-    //   console.log("change start")
-    //   console.log(router)
-    // });
-    // router.events.on('routeChangeStart', () => {
-    //   if (router.pathname.includes('[id]')) {
-    //     router.push('haloo')
-    //   }
-    //   console.log(router)
-    // });
-    // router.events.on('routeChangeError', () => {
-    //   console.log('errorrr')
-    // });
-
-  }, [router.pathname]);
-
-  return <Component {...pageProps} />;
-
-  return !isLoginPage ? (
+  return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className='logo' />
@@ -94,15 +61,13 @@ function MyApp({ Component, pageProps }: AppProps) {
             className='site-layout-background'
             style={{ padding: 24, minHeight: 360 }}
           >
-            <Component {...pageProps} />
+            <MeetingV2 />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>In Development</Footer>
+        <Footer style={{ textAlign: "center" }}>
+          In Development
+        </Footer>
       </Layout>
     </Layout>
-  ) : (
-    <Component {...pageProps} />
   );
-}
-
-export default MyApp;
+};
